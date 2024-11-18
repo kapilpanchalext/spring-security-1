@@ -8,7 +8,6 @@ const Register = () => {
     email: '',
     mobileNumber: '',
     pwd: '',
-    role: '',
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -41,7 +40,6 @@ const Register = () => {
             email: '',
             mobileNumber: '',
             pwd: '',
-            role: '',
           });
         } else {
           const text = await response.text();
@@ -106,18 +104,6 @@ const Register = () => {
             id="pwd"
             name="pwd"
             value={formData.pwd}
-            onChange={handleChange}
-            required
-            style={{ width: '100%', padding: '8px', marginTop: '5px' }}
-          />
-        </div>
-        <div style={{ marginBottom: '15px' }}>
-          <label htmlFor="role">Role:</label>
-          <input
-            type="text"
-            id="role"
-            name="role"
-            value={formData.role}
             onChange={handleChange}
             required
             style={{ width: '100%', padding: '8px', marginTop: '5px' }}
