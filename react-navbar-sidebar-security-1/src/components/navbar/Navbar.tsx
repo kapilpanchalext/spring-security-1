@@ -39,8 +39,8 @@ const Navbar = () => {
           <Link href="/home" className={isActive('/home') ? styles.active : ''}>Home</Link>
           <Link href="/dashboard" className={isActive('/dashboard') ? styles.active : ''}>Dashboard</Link>
           <Link href="/contactus" className={isActive('/contactus') ? styles.active : ''}>Contact Us</Link>
-          <Link href="/notices" className={isActive('/notices') ? styles.active : ''}>Notices</Link>
-          <Link href="/dashboard" className={isActive('/dashboard') ? styles.active : ''}>Login</Link>
+          <Link href="/register" className={isActive('/register') ? styles.active : ''}>Register</Link>
+          <Link href="/login" className={isActive('/login') ? styles.active : ''}>Login</Link>
         </nav>
 
         <button className={`${styles['menu-button']}`} onClick={openLinksMenuHandler}>
