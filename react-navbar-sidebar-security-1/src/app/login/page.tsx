@@ -1,11 +1,13 @@
 "use client"
+import { useRouter } from 'next/navigation';
 import React, { FormEvent, useState } from 'react';
 
 const LoginPage = () => {
+  const router = useRouter();
 
   const [formData, setFormData] = useState({
-    email: '',
-    pwd: '',
+    username: '',
+    password: '',
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -18,29 +20,30 @@ const LoginPage = () => {
     console.dir(e.target);
 
     try {
-      const response = await fetch('http://localhost:9001/api/v1/helloworld?studentId=1', {
+      const response = await fetch('http://localhost:9001/login', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
+           'Content-Type': 'application/x-www-form-urlencoded'
         },
-        body: JSON.stringify(formData),
+        body: new URLSearchParams(formData).toString()
       });
   
       if (response.ok) {
-        // Check if the response is JSON
         const contentType = response.headers.get('content-type');
         if (contentType && contentType.includes('application/json')) {
           const data = await response.json();
           console.log('Login successful:', data);
           alert('Login successful!');
           setFormData({
-            email: '',
-            pwd: '',
+            username: '',
+            password: '',
           });
         } else {
           const text = await response.text();
           console.log('Non-JSON response:', text);
-          alert('Login response received but not in JSON format.');
+          if(text === 'AUTH'){
+            router.push('/dashboard');
+          }
         }
       } else {
         console.error('Login failed:', response.statusText);
@@ -61,9 +64,9 @@ const LoginPage = () => {
             <label htmlFor="email">Email:</label>
             <input
               type="email"
-              id="email"
-              name="email"
-              value={formData.email}
+              id="username"
+              name="username"
+              value={formData.username}
               onChange={handleChange}
               required
               style={{ width: '100%', padding: '8px', marginTop: '5px' }}
@@ -73,9 +76,9 @@ const LoginPage = () => {
             <label htmlFor="password">Password:</label>
             <input
               type="password"
-              id="pwd"
-              name='pwd'
-              value={formData.pwd}
+              id="password"
+              name='password'
+              value={formData.password}
               onChange={handleChange}
               required
               style={{ width: '100%', padding: '8px', marginTop: '5px' }}
