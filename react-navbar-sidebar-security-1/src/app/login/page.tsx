@@ -18,14 +18,14 @@ const LoginPage = () => {
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.dir(e.target);
-
+    const credentials = `Basic ` + btoa(`${formData.username}:${formData.password}`);
+    alert(credentials);
     try {
       const response = await fetch('http://localhost:9001/login', {
         method: 'POST',
         headers: {
-           'Content-Type': 'application/x-www-form-urlencoded'
+           'Authorization': credentials
         },
-        body: new URLSearchParams(formData).toString()
       });
   
       if (response.ok) {
@@ -40,7 +40,10 @@ const LoginPage = () => {
           });
         } else {
           const text = await response.text();
-          console.log('Non-JSON response:', text);
+          console.log(text);
+          window.sessionStorage.setItem('Authorization', response.headers.get('Authorization')!);
+          console.log("Authorization", response.headers.get('Authorization')!);
+          console.dir(response);
           if(text === 'AUTH'){
             router.push('/dashboard');
           }
