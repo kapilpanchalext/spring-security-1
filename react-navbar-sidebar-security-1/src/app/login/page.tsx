@@ -18,16 +18,17 @@ const LoginPage = () => {
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.dir(e.target);
-    const credentials = `Basic ` + btoa(`${formData.username}:${formData.password}`);
+    const credentials = btoa(`${formData.username}:${formData.password}`);
     alert(credentials);
     try {
-      const response = await fetch('http://localhost:9001/login', {
-        method: 'POST',
+      const response = await fetch('http://localhost:9001/api/v1/helloworld', {
+        method: 'GET',
         headers: {
-           'Authorization': credentials
+          'Content-Type': 'application/json',
+          'Authorization': `Basic ${credentials}`,
         },
       });
-  
+
       if (response.ok) {
         const contentType = response.headers.get('content-type');
         if (contentType && contentType.includes('application/json')) {
