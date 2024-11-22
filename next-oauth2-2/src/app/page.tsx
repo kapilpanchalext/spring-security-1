@@ -1,9 +1,9 @@
-import styles from "./page.module.css";
+import styles from "./page.module.scss";
 
 export default function Home() {
   return (
-    <>
-      <h1>Home Page</h1>
-    </>
+    <div>
+      <h1>Next JS App</h1>
+    </div>
   );
 }
