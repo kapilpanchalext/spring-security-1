@@ -39,6 +39,9 @@ const LoginPage = () => {
             username: '',
             password: '',
           });
+          if(JSON.stringify(data) === 'AUTH'){
+            router.push('/dashboard');
+          }
         } else {
           const text = await response.text();
           console.log(text);
