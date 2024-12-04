@@ -12,12 +12,13 @@ export default function Home() {
     console.log("Send Request To Auth Server Handler");
 
     // Construct the base URL
-    const baseURL = 'http://localhost:9002/realms/application1_realm/protocol/openid-connect/auth';
+    // const baseURL = 'http://localhost:9002/realms/application1_realm/protocol/openid-connect/auth';
+    const baseURL = 'http://localhost:8084/oauth2/authorize';
 
     // Define query parameters
     const queryParams = {
       response_type: 'code',
-      client_id: 'application_1_client_pkce',
+      client_id: 'capstone-project-auth-code-pkce-1',
       redirect_uri: 'http://localhost:3000',
       scope: 'openid email',
       state: '4qFl3tTCkYb2R6pD',
@@ -30,7 +31,8 @@ export default function Home() {
     Object.entries(queryParams).forEach(([key, value]) => {
       url.searchParams.append(key, value);
     });
-
+    // alert("URL: " + url.toString());
+    console.dir(url);
     window.location.href = url.toString();
   };
 
@@ -73,20 +75,23 @@ export default function Home() {
       if (response.ok) {
         const data = await response;
         console.log('Received access token:', data);
+        alert("RECEIVED ACCESS TOKENL: " + data);
       } 
     } catch (error) {
       console.error('Error during code exchange:', error);
+      alert("ERROR: " + error);
     }
   };
 
   async function exchangeCodeForTokens(code: string) {
     try {
       // Send the authorization code to your backend or use it to get tokens
-      const baseURL = 'http://localhost:9002/realms/application1_realm/protocol/openid-connect/token';
+      // const baseURL = 'http://localhost:9002/realms/application1_realm/protocol/openid-connect/token';
+      const baseURL = 'http://localhost:8084/oauth2/token';
       // Define query parameters
       const body = new URLSearchParams({
           grant_type: 'authorization_code',
-          client_id: 'application_1_client_pkce',
+          client_id: 'capstone-project-auth-code-pkce-1',
           redirect_uri: 'http://localhost:3000',
           code: code,
           code_verifier: '2m_do5z6EiZu5WFtXjTjxMwy47vxTB3i-fFLVGsnu2-PY9Y3'
@@ -107,6 +112,7 @@ export default function Home() {
         if (data.access_token) {
           setAccessToken(data.access_token);
           console.log('Received access token:', data.access_token);
+          alert("RECEIVED ACCESS TOKENL: " + data.access_token);
         } else {
           console.error('Error exchanging code:', data);
         }
@@ -117,6 +123,7 @@ export default function Home() {
       }
     } catch (error) {
       console.error('Error during code exchange:', error);
+      alert("ERROR: " + error);
     }
   }
 
